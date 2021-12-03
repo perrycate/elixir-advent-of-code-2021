@@ -1,4 +1,4 @@
-# 20 minutes.
+# 30 minutes total.
 defmodule Day2 do
   def part1(filename) do
     input = stream(filename)
@@ -12,6 +12,16 @@ defmodule Day2 do
                        |> Enum.sum
   end
 
+  def part2(filename) do
+    {pos, depth, _} = stream(filename)
+    |> Enum.reduce({0, 0, 0}, &process_command/2)
+    IO.inspect(pos * depth)
+  end
+
+  def process_command({"forward", v}, {pos, depth, aim}), do: {pos+v, depth+v*aim, aim}
+  def process_command({"up",      v}, {pos, depth, aim}), do: {pos, depth, aim - v}
+  def process_command({"down",    v}, {pos, depth, aim}), do: {pos, depth, aim + v}
+
   def stream(filename) do
     File.stream!(filename)
     |> Stream.map(&String.split/1)
@@ -19,4 +29,4 @@ defmodule Day2 do
   end
 end
 
-Day2.part1("input")
+Day2.part2("input")
