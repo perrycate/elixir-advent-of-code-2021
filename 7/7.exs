@@ -1,4 +1,8 @@
 defmodule Day7 do
+  # Note to self: Got lucky on this one.
+  # If the optimal position isn't in the input positions list, we'll fail.
+  # Oops.
+
   def part1 do
     positions = parse("input")
     p = Enum.min_by(positions, fn x -> linear_fuel_to(positions, x) end)
