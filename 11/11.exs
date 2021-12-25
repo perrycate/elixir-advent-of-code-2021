@@ -10,6 +10,20 @@ defmodule Day11 do
       end)
   end
 
+  def part2 do
+    initial_state = parse("input")
+    {_, count} = Enum.reduce_while(
+      1..100000,
+      {initial_state, 0},
+      fn _, {state, step_count} ->
+        case perform_step(state) do
+          {next, new_flashes} when new_flashes == 100 -> {:halt, {next, step_count + 1}}
+          {next, _} -> {:cont, {next, step_count + 1}}
+        end
+      end)
+    count
+  end
+
   def parse(filename) do
     File.stream!(filename)
     |> Enum.map(fn line ->
